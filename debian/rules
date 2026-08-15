@@ -1,0 +1,27 @@
+#!/usr/bin/make -f
+
+# croc's go.mod asks for a newer Go than the suite ships; let the Go tool
+# fetch that toolchain, the same trade the builder makes for Rust.
+export GOTOOLCHAIN := auto
+export GOFLAGS := -trimpath
+export GOCACHE := $(CURDIR)/.gocache
+export GOPATH := $(CURDIR)/.gopath
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	go build -buildmode=pie -o croc .
+
+# Upstream's tests exercise real transfers over relays; function is
+# covered by the packaging smoke test (a real local transfer) instead.
+override_dh_auto_test:
+
+override_dh_auto_install:
+	install -Dm0755 croc debian/croc/usr/bin/croc
+
+override_dh_auto_clean:
+	rm -rf $(CURDIR)/.gocache $(CURDIR)/.gopath croc
+
+# dwz has nothing useful to do on Go binaries.
+override_dh_dwz:
