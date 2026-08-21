@@ -1,3 +1,12 @@
+croc (11.2.4-1) unstable; urgency=medium
+
+  * New upstream release
+  * Stamp the version constant from the changelog at build time, as
+    upstream's release workflow does; the constant committed at a tag is
+    one release behind, so croc --version reported 11.2.3
+
+ -- pkg.haus archive <archive@pkg.haus>  Fri, 21 Aug 2026 07:27:31 +0200
+
 croc (11.1.2-1) unstable; urgency=medium
 
   * New upstream release
