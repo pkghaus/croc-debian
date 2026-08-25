@@ -1,0 +1,10 @@
+version=4
+
+# The pipeline builds from the git tag named in package.conf, not from a
+# tarball, so nothing here drives the build. It is here because uscan is
+# what a Debian reader reaches for to answer "is this current", and because
+# the archive's own watcher (pkghaus/apt watch-upstreams.yml) answers the
+# same question from the same tags.
+opts=filenamemangle=s%(?:.*?)?v?(\d[\d.]*)\.tar\.gz%croc-$1.tar.gz% \
+  https://github.com/schollz/croc/tags \
+  (?:.*?/)?v?(\d[\d.]*)\.tar\.gz debian uupdate

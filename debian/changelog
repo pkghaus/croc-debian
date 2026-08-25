@@ -1,3 +1,12 @@
+croc (11.3.0-1) unstable; urgency=medium
+
+  * New upstream release
+  * Declare compliance with Debian Policy 4.7.2.0
+  * Add debian/watch
+  * Add a DEP-8 test that runs a real transfer through a local relay
+
+ -- pkg.haus archive <archive@pkg.haus>  Tue, 25 Aug 2026 10:26:22 +0200
+
 croc (11.2.5-1) unstable; urgency=medium
 
   * New upstream release
