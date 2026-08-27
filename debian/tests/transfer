@@ -73,4 +73,16 @@ wait "$send_pid"
 got="$(sha256sum recv/payload.bin | cut -d' ' -f1)"
 [ "$want" = "$got" ] || { echo "checksum mismatch: sent $want, got $got" >&2; exit 1; }
 
-echo "transferred 8 MiB through a local relay, sha256 $got"
+# The binary must also know what it is. Cheap, and it catches a package that
+# shipped the wrong build entirely, which a transfer test cannot see: any croc
+# talks to any croc.
+want="$(dpkg-query -W -f='${Version}' croc | sed 's/-[^-]*$//')"
+reported="$(croc --version 2>&1)"
+printf '%s\n' "$reported"
+case "$reported" in
+    *"$want"*) ;;
+    *) echo "croc --version [$reported] does not name the packaged version [$want]" >&2
+       exit 1 ;;
+esac
+
+echo "transferred 8 MiB through a local relay, sha256 $got, version $want"
